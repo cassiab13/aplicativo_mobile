@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import 'package:aplicativo/models/child.dart';
+import 'package:aplicativo/models/child.dart';
 import 'package:aplicativo/service/child_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
@@ -54,23 +55,60 @@ void main() {
       )).called(1);
     });
 
-  //   test('should update a child successfully', () async {
-  //     final updatedChild = Child(
-  //       id: '1',
-  //       name: 'João Updated',
-  //       gender: 'Masculino',
-  //       birthDate: '2020-01-01',
-  //       vaccines: [],
-  //   );
+    test('should update a child successfully', () async {
+      final updatedChild = Child(
+        id: '1',
+        name: 'João Updated',
+        gender: 'Masculino',
+        birthDate: '15-02-2023',
+        vaccines: [],
+    );
 
-  //   when(() => httpClientMock.put(any(), body: any(named: 'body')))
-  //     .thenAnswer((_) async => http.Response('', 204));
+    when(() => httpClientMock.put(
+      Uri.parse('http://localhost:3000/children/${updatedChild.id}'),
+      body: any(named: 'body'),
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      ))
+      .thenAnswer((_) async => http.Response('', 204));
 
-  //   await childService.update(updatedChild.id, updatedChild);
+    await childService.update(updatedChild.id, updatedChild);
 
-  //   verify(() => httpClientMock.put(
-  //   Uri.parse("http://localhost:3000/children/${updatedChild.id}"),
-  //   body: updatedChild.toJSON(),
-  //   )).called(1);
-  // });
+    verify(() => httpClientMock.put(
+    Uri.parse('http://localhost:3000/children/${updatedChild.id}'),
+      body: any(named: 'body'),
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      ));
+  });
+  test('should create a child successfully', () async {
+      final child1 = Child(
+        id: '543',
+        name: 'Leandro',
+        gender: 'Masculino',
+        birthDate: '24-02-2023',
+        vaccines: [],
+    );
+
+    when(() => httpClientMock.post(
+      Uri.parse('http://localhost:3000/children'),
+      body: any(named: 'body'),
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      ))
+      .thenAnswer((_) async => http.Response('', 201));
+
+    await childService.create(child1);
+
+    verify(() => httpClientMock.post(
+    Uri.parse('http://localhost:3000/children'),
+      body: any(named: 'body'),
+      headers: <String, String>{
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      ));
+  });
 }

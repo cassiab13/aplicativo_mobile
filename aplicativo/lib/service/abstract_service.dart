@@ -31,14 +31,13 @@ abstract class AbstractService<T> {
   }
 
   Future<void> update(String id, T item) async {
-    var response = await httpClient.put(
+    await httpClient.put(
       Uri.parse("$url$_recurso/$id"),
       headers: <String, String>{
         'Content-type': 'application/json; charset=UTF-8',
       },
       body: toJSON(item),
     );
-    print("response: ${response.body}");
   }
 
   Future<void> delete(String? id) async {

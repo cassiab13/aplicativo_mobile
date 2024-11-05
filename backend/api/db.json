@@ -99,19 +99,19 @@
       },
       {
         "id": 5,
-        "name": "Pneumocócica",
+        "name": "Pneumococica",
         "months": 2,
         "dose": 1
       },
       {
         "id": 6,
-        "name": "Rotavírus",
+        "name": "Rotavirus",
         "months": 2,
         "dose": 1
       },
       {
         "id": 7,
-        "name": "Meningocócica C",
+        "name": "Meningococica C",
         "months": 3,
         "dose": 1
       },
@@ -129,19 +129,19 @@
       },
       {
         "id": 10,
-        "name": "Pneumocócica",
+        "name": "Pneumococica",
         "months": 4,
         "dose": 2
       },
       {
         "id": 11,
-        "name": "Rotavírus",
+        "name": "Rotavirus",
         "months": 4,
         "dose": 2
       },
       {
         "id": 12,
-        "name": "Meningocócica C",
+        "name": "Meningococica C",
         "months": 5,
         "dose": 2
       },
@@ -165,19 +165,19 @@
       },
       {
         "id": 16,
-        "name": "Tríplice Viral",
+        "name": "Triplice Viral",
         "months": 12,
         "dose": 1
       },
       {
         "id": 17,
-        "name": "Pneumocócica",
+        "name": "Pneumococica",
         "months": 12,
         "dose": 2
       },
       {
         "id": 18,
-        "name": "Meningocócica C",
+        "name": "Meningococica C",
         "months": 12,
         "dose": 2
       },
@@ -219,7 +219,7 @@
       },
       {
         "id": 25,
-        "name": "Tríplice Viral",
+        "name": "Triplice Viral",
         "months": 48,
         "dose": 2
       },
@@ -237,7 +237,7 @@
       },
       {
         "id": 28,
-        "name": "Meningocócica ACWY",
+        "name": "Meningococica ACWY",
         "months": 132,
         "dose": 1
       }
