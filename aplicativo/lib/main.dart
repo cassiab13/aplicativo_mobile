@@ -1,3 +1,4 @@
+import 'package:aplicativo/pages/home.dart';
 import 'package:aplicativo/pages/initial.dart';
 import 'package:aplicativo/pages/login.dart';
 import 'package:aplicativo/pages/welcome.dart';
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomePage(),
         '/login': (context) => const LoginPage(),
-        '/main': (context) => const InitialPage()
+        '/home': (context) => const HomePage(),
+        '/initial': (context) => const InitialPage(),
       },
       );
   }

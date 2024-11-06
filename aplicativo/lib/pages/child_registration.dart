@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:aplicativo/components/container.dart';
 import 'package:aplicativo/models/child.dart';
 import 'package:aplicativo/service/child_service.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ class _ChildRegistrationFormState extends State<ChildRegistrationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ContainerComponent(
+      child: SingleChildScrollView(
         child: Padding(
       padding: const EdgeInsets.all(20.0),
       child: Form(
@@ -128,6 +130,6 @@ class _ChildRegistrationFormState extends State<ChildRegistrationForm> {
               ]),
         ),
       ),
-    ));
+    )));
   }
 }

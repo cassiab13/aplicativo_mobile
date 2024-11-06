@@ -5,7 +5,7 @@ class Child {
   final String name;
   final String gender;
   final String birthDate;
-  final List<Vaccine> vaccines;
+  late List<Vaccine> vaccines;
 
   Child({
     required this.id,

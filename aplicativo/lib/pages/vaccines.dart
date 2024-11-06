@@ -1,3 +1,4 @@
+import 'package:aplicativo/components/container.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:aplicativo/models/child.dart';
@@ -28,8 +29,18 @@ class _VaccinesState extends State<Vaccines> {
     setState(() {
       _selectedChild = child;
       _selectedVaccines = child?.vaccines ?? [];
+      _vaccines.then((allVaccines) {
+      setState(() {
+        _availableVaccines = allVaccines.where((vaccine) {
+          return !_selectedVaccines.any((selectedVaccine) =>
+              selectedVaccine.name == vaccine.name &&
+              selectedVaccine.dose == vaccine.dose);
+         }).toList();
+        });
+      });
     });
   }
+
 
   void _addVaccine(Vaccine vaccine) {
     if (!_selectedVaccines.contains(vaccine)) {
@@ -47,20 +58,29 @@ class _VaccinesState extends State<Vaccines> {
 
   void _saveVaccines() async {
     if (_selectedChild != null) {
-      _selectedChild!.vaccines.addAll(_selectedVaccines);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-                Text('Vacinas adicionadas à criança ${_selectedChild!.name}')),
-      );
+      _selectedChild!.vaccines = _selectedVaccines;
+
+      try {
+        await ChildService(httpClient: http.Client())
+            .update(_selectedChild!.id, _selectedChild!);
+        print('fiz o update');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Vacinas salvas para ${_selectedChild!.name}')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Erro ao salvar vacinas')),
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Vacinas')),
-      body: FutureBuilder<List<Child>>(
+      body: ContainerComponent(
+        child: FutureBuilder<List<Child>>(
         future: _children,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -87,7 +107,7 @@ class _VaccinesState extends State<Vaccines> {
                 }).toList(),
               ),
               FutureBuilder<List<Vaccine>>(
-                future: _vaccines,
+                future: Future.value(_availableVaccines),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -110,7 +130,7 @@ class _VaccinesState extends State<Vaccines> {
 
                         return ListTile(
                           title: Text(vaccine.name),
-                          subtitle: Text('${vaccine.dose.toString()} ª dose'),
+                          subtitle: Text('${vaccine.dose.toString()} ª dose   | ${vaccine.formatAge(vaccine.months)}'),
                           trailing: IconButton(
                             icon: Icon(
                               isSelected
@@ -132,14 +152,18 @@ class _VaccinesState extends State<Vaccines> {
                   );
                 },
               ),
+              const Padding(padding: EdgeInsets.all(16.0)),
               ElevatedButton(
                 onPressed: _saveVaccines,
                 child: const Text('Salvar Vacinas'),
               ),
+              const Padding(padding: EdgeInsets.all(16.0)),
             ],
           );
         },
-      ),
+      ),)
     );
   }
 }
+
+

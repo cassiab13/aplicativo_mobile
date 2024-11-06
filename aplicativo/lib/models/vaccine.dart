@@ -32,4 +32,13 @@ class Vaccine {
       'taken': taken,
     };
   }
+
+  String formatAge(int months) {
+  if (months >= 12) {
+    int years = (months / 12).floor();
+    return '$years ${years == 1 ? "ano" : "anos"}';
+  } else {
+    return '$months ${months == 1 ? "mês" : "meses"}';
+  }
+}
 }

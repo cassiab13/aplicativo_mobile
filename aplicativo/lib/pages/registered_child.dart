@@ -1,3 +1,4 @@
+import 'package:aplicativo/components/container.dart';
 import 'package:aplicativo/models/child.dart';
 import 'package:aplicativo/service/child_service.dart';
 import 'package:flutter/material.dart';
@@ -141,8 +142,8 @@ class _RegisteredChildState extends State<RegisteredChild> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Crianças registradas')),
-      body: FutureBuilder<List<Child>>(
+      body: ContainerComponent(
+        child: FutureBuilder<List<Child>>(
         future: _children,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -168,11 +169,10 @@ class _RegisteredChildState extends State<RegisteredChild> {
                   children: [
                     Column(
                       children: child.vaccines.map((vaccine) {
-                        return ListTile(
-                          title: Text(vaccine.name),
-                          subtitle: Text(
-                              'Dose: ${vaccine.dose}, Meses: ${vaccine.months}'),
-                        );
+                        return 
+                        ListTile(
+                          title:Text(vaccine.name),
+                          trailing: Text('Dose: ${vaccine.dose}  | ${vaccine.formatAge(vaccine.months)}'),);
                       }).toList(),
                     ),
                     Row(
@@ -198,7 +198,7 @@ class _RegisteredChildState extends State<RegisteredChild> {
             },
           );
         },
-      ),
+      ),)
     );
   }
 }

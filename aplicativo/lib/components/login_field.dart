@@ -5,7 +5,7 @@ class LoginField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -32,22 +32,6 @@ class LoginField extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 30),
-        FilledButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/main');
-          },
-          style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                 const Color.fromARGB(255, 240, 177, 203)),
-              fixedSize: WidgetStateProperty.all(const Size(150, 30)),
-              ),
-          child: const Text(
-            style: TextStyle(
-              color: Colors.black,
-              ),
-            'Login'),
-        )
       ],
     );
   }
