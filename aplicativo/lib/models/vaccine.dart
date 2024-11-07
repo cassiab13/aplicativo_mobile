@@ -1,4 +1,5 @@
 class Vaccine {
+  final String id;
   final String name;
   final int months;
   final String? description;
@@ -6,6 +7,7 @@ class Vaccine {
   bool taken;
 
   Vaccine({
+    required this.id,
     required this.name,
     required this.months,
     this.description,
@@ -15,6 +17,7 @@ class Vaccine {
 
   factory Vaccine.fromJSON(Map<String, dynamic> json) {
     return Vaccine(
+      id: json['id'],
       name: json['name'],
       months: json['months'],
       description: json['description'],
@@ -25,6 +28,7 @@ class Vaccine {
 
   Map<String, dynamic> toJSON() {
     return {
+      'id': id,
       'name': name,
       'months': months,
       'description': description,
@@ -34,11 +38,11 @@ class Vaccine {
   }
 
   String formatAge(int months) {
-  if (months >= 12) {
-    int years = (months / 12).floor();
-    return '$years ${years == 1 ? "ano" : "anos"}';
-  } else {
-    return '$months ${months == 1 ? "mês" : "meses"}';
+    if (months >= 12) {
+      int years = (months / 12).floor();
+      return '$years ${years == 1 ? "ano" : "anos"}';
+    } else {
+      return '$months ${months == 1 ? "mês" : "meses"}';
+    }
   }
-}
 }

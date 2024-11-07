@@ -36,6 +36,16 @@ class _RegisteredChildState extends State<RegisteredChild> {
     });
   }
 
+Future<void> _deleteVaccine(String childId, String vaccineId) async {
+  List<Child> children = await _childService.getAll();
+  Child child = children.firstWhere((child) => child.id == childId);
+  child.vaccines = child.vaccines.where((vaccine) => vaccine.id != vaccineId).toList();
+  await _childService.update(childId, child);
+  setState(() {
+    _loadChildren();
+  });
+}
+
   Future<void> _editChild(String id, Child updatedChild) async {
     await _childService.update(id, updatedChild);
     setState(() {
@@ -116,9 +126,8 @@ class _RegisteredChildState extends State<RegisteredChild> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Confirmar Exclusão'),
-          content:
-              const Text('Você tem certeza que deseja excluir?'),
+          title: const Text('Confirmar Exclusão?'),
+          content: const Text('Você tem certeza que deseja excluir?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -139,11 +148,39 @@ class _RegisteredChildState extends State<RegisteredChild> {
     );
   }
 
+  Future<void> _showDeleteVaccineConfirmation(
+      String childId, String vaccineId) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirmar exclusão?'),
+          content: const Text('Você tem certeza que deseja excluir?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _deleteVaccine(childId, vaccineId);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Excluir'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ContainerComponent(
-        child: FutureBuilder<List<Child>>(
+        body: ContainerComponent(
+      child: FutureBuilder<List<Child>>(
         future: _children,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -169,10 +206,26 @@ class _RegisteredChildState extends State<RegisteredChild> {
                   children: [
                     Column(
                       children: child.vaccines.map((vaccine) {
-                        return 
-                        ListTile(
-                          title:Text(vaccine.name),
-                          trailing: Text('Dose: ${vaccine.dose}  | ${vaccine.formatAge(vaccine.months)}'),);
+                        return ListTile(
+                          title: Text(vaccine.name),
+                          trailing: SizedBox(
+                            width: 140,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    'Dose: ${vaccine.dose} | ${vaccine.formatAge(vaccine.months)}'),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _showDeleteVaccineConfirmation(
+                                        child.id, vaccine.id);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
                       }).toList(),
                     ),
                     Row(
@@ -198,7 +251,7 @@ class _RegisteredChildState extends State<RegisteredChild> {
             },
           );
         },
-      ),)
-    );
+      ),
+    ));
   }
 }

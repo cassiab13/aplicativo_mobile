@@ -6,7 +6,8 @@ import 'package:aplicativo/service/vaccine_service.dart';
 import 'package:http/http.dart' as http;
 
 class ChildService extends AbstractService<Child> {
-  ChildService({required http.Client httpClient}) : super('/children', httpClient);
+  ChildService({required http.Client httpClient})
+      : super('/children', httpClient);
 
   @override
   Future<Child> fromJSON(dynamic json) async {
@@ -14,7 +15,8 @@ class ChildService extends AbstractService<Child> {
     List<Vaccine> vaccines = [];
     if (map['vaccines'] != null) {
       vaccines = (map['vaccines'] as List)
-          .map((vaccineJson) => Vaccine.fromJSON(vaccineJson as Map<String, dynamic>))
+          .map((vaccineJson) =>
+              Vaccine.fromJSON(vaccineJson as Map<String, dynamic>))
           .toList();
     } else {
       VaccineService vaccineService = VaccineService(httpClient: http.Client());

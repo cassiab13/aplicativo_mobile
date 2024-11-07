@@ -29,8 +29,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: ContainerComponent(
         child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,       
               children: [
                 const LoginField(),
                 const SizedBox(height: 20.0),
@@ -41,7 +40,7 @@ class LoginPage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[800],
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0,
+                      horizontal: 20.0,
                       vertical: 12.0,
                     ),
                     textStyle: const TextStyle(
