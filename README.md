@@ -37,7 +37,7 @@ A estrutura do projeto no front-end é organizada da seguinte forma:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seuusuario/seuprojeto.git
+   git clone https://github.com/cassiab13/aplicativo_mobile.git
 
 2. Navegue até a pasta do aplicativo Flutter e execute o projeto:
  - cd aplicativo
