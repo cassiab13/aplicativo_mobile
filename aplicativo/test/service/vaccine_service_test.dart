@@ -22,14 +22,20 @@ void main() {
       (_) async => http.Response(
         jsonEncode([
           {
+            'id': '1',
             'name': 'BCG',
-            'dose': 1,
             'months': 0,
+            'description': 'Uma descrição',
+            'dose': 1,
+            'taken': true
           },
           {
+             'id': '1',
             'name': 'DTPa',
-            'dose': 3,
-            'months': 2,
+            'months': 0,
+            'description': 'Uma descrição',
+            'dose': 1,
+            'taken': true
           },
         ]),
         200,
